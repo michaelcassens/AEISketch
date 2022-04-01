@@ -22,7 +22,7 @@ var start = 0;
 var displayAll = false;
 var line1ending = ["E", "M", "E", "R", "G", "E", "S", "T", "R", "O", "N", "G", "E", "R"];
 var myFont;
-
+var myEnding;
 function preload() {
   result = loadStrings('assets/words.txt');
   myFont = loadFont('./assets/fonts/IndieFlower-Regular.ttf');
@@ -33,17 +33,7 @@ function windowResized() {
 }
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  xpos = width/4+100;
-  ypos = height/4;
-  for (var i = 0; i < 100; i++) {
-    direction = 1;//Math.floor(random(1, 9));
-    x = random(50, width -50);
-    y = random(50, height -50)
-    myW = new Word(x, y, w, h, result[0], direction);
-    words[i] = myW;
-  }
-
-  setInterval(showEnding, 1000);
+  startProgram();
 
 }
 
@@ -79,7 +69,7 @@ if(!displayAll)
 }
 
   if (displayAll) {
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 20; i++) {
       let p = new Particle(displayWidth/2, displayHeight-50, random(-15, 15), random(-15, -10),255);
       particles.push(p);
     }
@@ -136,6 +126,26 @@ function showEnding() {
   } 
   else if (k >= line1ending.length) {
     displayAll = true;
+    setTimeout(startProgram,10000);
+    clearInterval(myEnding);
   }
 
+}
+
+function startProgram()
+{
+  count = 0;
+  k = 0;
+  displayAll = false;
+  xpos = width/4+100;
+  ypos = height/4;
+  for (var i = 0; i < 100; i++) {
+    direction = 1;//Math.floor(random(1, 9));
+    x = random(50, width -50);
+    y = random(50, height -50)
+    myW = new Word(x, y, w, h, result[0], direction);
+    words[i] = myW;
+  }
+
+ myEnding = setInterval(showEnding, 1000);
 }
