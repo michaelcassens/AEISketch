@@ -7,47 +7,11 @@ class Word {
         this.h = h;
         this.word = word;
         this.direction = direction;
+        this.yDirection = floor(random(-5,5)) + 1;
+        this.xDirection = floor(random(-5,5)) + 1;
         
        
     }
-
-  /* moveDiagonalDownRight() {
-       
-        this.x += random(1,10);
-        this.y += random(1,10);
-    }
-
-    moveDiagonalDownLeft() {
-        this.x -= random(1,10);
-        this.y += random(1,10);
-    }
-
-    moveDiagonalUpRight() {
-        this.x += random(1,10);
-        this.y -= random(1,10);
-    }
-
-    moveDiagonalUpLeft() {
-        this.x -= random(1,10);
-        this.y -= random(1,10);
-    }
-
-    moveLeft() {
-        this.x -= random(1,10);
-        
-    }
-
-    moveRight() {
-        this.x += random(1,10);
-    }
-
-    moveUp() {
-        this.y -= random(1,10);
-    }
-
-    moveDown() {
-        this.y += random(1,10);
-    }*/
 
     getX(){
         return this.x;
@@ -58,43 +22,25 @@ class Word {
     }
     update()
     {
-        this.y += random(1,10);
-     //   this.x -= random(-1,-5);
+        if(this.xDirection == 0)
+        {
+            this.xDirection = 1;
+        }
+        if(this.yDirection == 0)
+        {
+            this.yDirection = 1;
+        }
+        this.y += this.yDirection;
+        this.x += this.xDirection;
     }
     draw() {
-        //translate(400,350);
         rectMode(CENTER);
 
         fill(255,10,10);
         rect(this.x, this.y, this.w, this.h,20);
         fill(0);
         text(this.word, this.x, this.y+10);
-       /* switch (this.direction) {
-            case 1:
-                this.moveDown();
-                break;
-            case 2:
-                this.moveDiagonalDownRight();
-                break;
-            case 3:
-                this.moveDiagonalUpLeft();
-                break;
-            case 4:
-                this.moveDiagonalUpRight();
-                break;
-            case 5:
-                this.moveRight();
-                break;
-            case 6:
-                this.moveUp();
-                break;
-            case 7:
-                this.moveDown();
-                break;
-            case 8:
-                this.moveLeft();
-                break;
-        }*/
+       
     }
 
 }

@@ -70,7 +70,7 @@ if(!displayAll)
 
   if (displayAll) {
     for (let i = 0; i < 20; i++) {
-      let p = new Particle(displayWidth/2, displayHeight-50, random(-15, 15), random(-15, -10),255);
+      let p = new Particle(random(displayWidth), displayHeight-50, random(-15, 15), random(-15, -10),255);
       particles.push(p);
     }
     for (let i = particles.length - 1; i >= 0; i--) {
@@ -83,8 +83,8 @@ if(!displayAll)
     }
 
     // have some fall from the sky
-    for (let i = 0; i < 50; i++) {
-      let p = new Particle(random(displayWidth),0, 0, random(1, 4),255);
+    for (let i = 0; i < 20; i++) {
+      let p = new Particle(random(displayWidth),0, 0, random(1, 5),255);
       rain.push(p);
     }
     for (let i = rain.length - 1; i >= 0; i--) {
@@ -143,9 +143,10 @@ function startProgram()
     direction = 1;//Math.floor(random(1, 9));
     x = random(50, width -50);
     y = random(50, height -50)
-    myW = new Word(x, y, w, h, result[0], direction);
+    number = floor(random(0, result.length));
+    myW = new Word(x, y, w, h, result[number], direction);
     words[i] = myW;
   }
-
+  letters.splice(0,letters.length);
  myEnding = setInterval(showEnding, 1000);
 }
