@@ -67,7 +67,7 @@ if(!displayAll)
       else
       allAtTheBottom = false;
     }
-    console.log(words.length + ":" + allAtTheBottom);
+  //  console.log(words.length + ":" + allAtTheBottom);
     if (allAtTheBottom) {
       reset();
     }
@@ -146,15 +146,21 @@ function startProgram()
   count = 0;
   k = 0;
   displayAll = false;
+  bottom = 50;
+  allAtTheBottom = false;
+  words.splice(0,words.length);
+ 
+  words = [];
+  
   xpos = width/4+100;
   ypos = height/4;
-  for (var i = 0; i < 100; i++) {
+  for (var i = 0; i < 50; i++) {
     direction = 1;//Math.floor(random(1, 9));
     x = random(50, width -50);
     y = random(50, height -50)
     number = floor(random(0, result.length));
     myW = new Word(x, y, w, h, result[number], direction);
-    words[i] = myW;
+    words.push(myW);
   }
   letters.splice(0,letters.length);
  myEnding = setInterval(showEnding, 1000);
