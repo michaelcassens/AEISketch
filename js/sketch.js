@@ -23,6 +23,8 @@ var displayAll = false;
 var line1ending = ["E", "M", "E", "R", "G", "E", "S", "T", "R", "O", "N", "G", "E", "R"];
 var myFont;
 var myEnding;
+var bottom = 50;
+var allAtTheBottom = false;
 function preload() {
   result = loadStrings('assets/words.txt');
   myFont = loadFont('./assets/fonts/IndieFlower-Regular.ttf');
@@ -55,14 +57,18 @@ if(!displayAll)
 
   if (count >= 0) {
     for (var i = 0; i < words.length; i++) {
-      words[i].update();
+      words[i].update(bottom);
       words[i].draw();
-      if (words[i].getX() > width || words[i].getY() > height || words[i].getX() < 0 || words[i].getY() < 0) {
-        words.splice(i, 1);
+      //if (words[i].getX() > width || words[i].getY() >= height-bottom || words[i].getX() < 0 || words[i].getY() < 0) {
+        if (words[i].getY() >= height-bottom) {
+        //words.splice(i, 1);
+        allAtTheBottom = true;
       }
+      else
+      allAtTheBottom = false;
     }
-
-    if (words.length == 0) {
+    console.log(words.length + ":" + allAtTheBottom);
+    if (allAtTheBottom) {
       reset();
     }
   }
@@ -100,8 +106,11 @@ if(!displayAll)
 }
 
 function reset() {
+  //allAtTheBottom = 0;
+  console.log("reset");
+  bottom+=15;
   count++;
-  for (var i = 0; i < 50; i++) {
+  for (var i = 0; i < 25; i++) {
     direction = 1;//Math.floor(random(1, 9));
     x = random(50, width -50);
     y = random(50, height -50)
@@ -109,7 +118,7 @@ function reset() {
     number = floor(random(0, result.length));
 
     myW = new Word(x, y, w, h, result[number], direction);
-    words[i] = myW;
+    words.push(myW);
   }
 }
 

@@ -7,7 +7,7 @@ class Word {
         this.h = h;
         this.word = word;
         this.direction = direction;
-        this.yDirection = floor(random(-5,5)) + 1;
+        this.yDirection = floor(random(3,5)) + 1;
         this.xDirection = floor(random(-5,5)) + 1;
         
        
@@ -20,7 +20,7 @@ class Word {
     getY(){
         return this.y;
     }
-    update()
+    update(bottom)
     {
         if(this.xDirection == 0)
         {
@@ -30,16 +30,22 @@ class Word {
         {
             this.yDirection = 1;
         }
-        this.y += this.yDirection;
-        this.x += this.xDirection;
+        
+        if(this.y <= height-bottom)
+        {
+            this.y += this.yDirection;
+            this.x += this.xDirection;
+        }
+        
     }
     draw() {
         rectMode(CENTER);
 
         fill(255,10,10);
-        rect(this.x, this.y, this.w, this.h,20);
+        //rect(this.x, this.y, this.w, this.h,20);
+        quad(this.x+30, this.y, this.x+this.w-30, this.y, this.x+this.w, this.y+this.h, this.x, this.y+this.h);
         fill(0);
-        text(this.word, this.x, this.y+10);
+        text(this.word, this.x+95, this.y+30);
        
     }
 
