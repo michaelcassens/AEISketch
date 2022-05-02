@@ -25,6 +25,7 @@ var myFont;
 var myEnding;
 var bottom = 50;
 var allAtTheBottom = false;
+var boxes;
 function preload() {
   result = loadStrings('assets/words.txt');
   myFont = loadFont('./assets/fonts/IndieFlower-Regular.ttf');
@@ -36,14 +37,14 @@ function windowResized() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   startProgram();
-
+  createBoxes();
 }
 
 function draw() {
   background(200);
   fill(45, 49, 120);
   textSize(100);
-
+  boxes.bounce(boxes);
   
   for (let i = 0; i < letters.length; i++) {
     textAlign(CENTER);
@@ -52,7 +53,7 @@ function draw() {
   }
 
   textSize(32);
-if(!displayAll)
+/*if(!displayAll)
 {
 
   if (count >= 0) {
@@ -72,9 +73,9 @@ if(!displayAll)
       reset();
     }
   }
-}
+}*/
 
-  if (displayAll) {
+if (displayAll) {
     for (let i = 0; i < 20; i++) {
       let p = new Particle(random(displayWidth), displayHeight-50, random(-15, 15), random(-15, -10),255);
       particles.push(p);
@@ -103,14 +104,39 @@ if(!displayAll)
     }
 
   }
+
+  //all sprites bounce at the screen edges
+  for(var i=0; i<allSprites.length; i++) {
+    var s = allSprites[i];
+    if(s.position.x<0) {
+      s.position.x = 1;
+      s.velocity.x = abs(s.velocity.x);
+    }
+
+    if(s.position.x>width) {
+      s.position.x = width-1;
+      s.velocity.x = -abs(s.velocity.x);
+    }
+
+    if(s.position.y<0) {
+      s.position.y = 1;
+      s.velocity.y = abs(s.velocity.y);
+    }
+
+    if(s.position.y>height) {
+      s.position.y = height-1;
+      s.velocity.y = -abs(s.velocity.y);
+    }
+  }
+  drawSprites();
 }
 
 function reset() {
   //allAtTheBottom = 0;
-  console.log("reset");
+  
   bottom+=15;
   count++;
-  for (var i = 0; i < 25; i++) {
+ /*for (var i = 0; i < 25; i++) {
     direction = 1;//Math.floor(random(1, 9));
     x = random(50, width -50);
     y = random(50, height -50)
@@ -119,7 +145,7 @@ function reset() {
 
     myW = new Word(x, y, w, h, result[number], direction);
     words.push(myW);
-  }
+  }*/
 }
 
 function showEnding() {
@@ -159,9 +185,36 @@ function startProgram()
     x = random(50, width -50);
     y = random(50, height -50)
     number = floor(random(0, result.length));
-    myW = new Word(x, y, w, h, result[number], direction);
-    words.push(myW);
+  //  myW = new Word(x, y, w, h, result[number], direction);
+  //  words.push(myW);
   }
   letters.splice(0,letters.length);
  myEnding = setInterval(showEnding, 1000);
+}
+
+function createBoxes()
+{
+  boxes = new Group();
+
+  for(var j=0; j<4; j++)
+  {
+    var box = createSprite(random(0, width), random(0, height));
+    box.addAnimation('normal', 'assets/box0001.png', 'assets/box0003.png');
+    //setting immovable to true makes the sprite immune to bouncing and displacements
+    //as if with infinite mass
+    box.setCollider('rectangle', -2, 2, 66, 118);
+    box.setSpeed(random(2, 3), random(0, 360));
+
+    //scale affects the size of the collider
+    box.scale = random(0.5, 1);
+    //mass determines the force exchange in case of bounce
+    box.mass = box.scale;
+    //restitution is the dispersion of energy at each bounce
+    //if = 1 the circles will bounce forever
+    //if < 1 the circles will slow down
+    //if > 1 the circles will accelerate until they glitch
+    //circle.restitution = 0.9;
+
+    boxes.add(box);
+  }
 }
