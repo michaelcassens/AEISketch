@@ -164,6 +164,10 @@ function showEnding() {
     setTimeout(startProgram,10000);
     clearInterval(myEnding);
   }
+  if(boxes != undefined)
+  {
+    boxes.clear();
+  }
 
 }
 
@@ -190,16 +194,40 @@ function startProgram()
   }
   letters.splice(0,letters.length);
  myEnding = setInterval(showEnding, 1000);
+ if(boxes != undefined)
+ {
+   boxes.clear();
+ }
+ createBoxes();
 }
 
 function createBoxes()
 {
   boxes = new Group();
-
-  for(var j=0; j<4; j++)
+  
+  for(var j=0; j<30; j++)
   {
-    var box = createSprite(random(0, width), random(0, height));
-    box.addAnimation('normal', 'assets/box0001.png', 'assets/box0003.png');
+    
+    if(frameCount%10 == 0) {
+
+      //create a sprite in a random position
+      //assign a random appearance
+      var box = createSprite(random(0, width), random(0, height));
+   
+      var rnd = floor(random(0, 3));
+  
+      if(rnd == 0)
+      box.addAnimation('img', 'assets/Image1.png');
+      if(rnd == 1)
+      box.addAnimation('img', 'assets/Image2.png');
+      if(rnd == 2)
+      box.addAnimation('img', 'assets/Image3.png');
+      
+      //set a lifespan to avoid consuming all the memory
+      box.life = 1000;
+    }
+    // box.addAnimation('normal', 'assets/Image1.png', 'assets/Image3.png');
+   // box.life = 50;
     //setting immovable to true makes the sprite immune to bouncing and displacements
     //as if with infinite mass
     box.setCollider('rectangle', -2, 2, 66, 118);
