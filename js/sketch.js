@@ -20,7 +20,7 @@ var ypos = 0;
 var xpos = 0;
 var start = 0;
 var displayAll = false;
-var line1ending = ["E", "M", "E", "R", "G", "E", "S", "T", "R", "O", "N", "G", "E", "R"];
+var line1ending = ["C", "O", "M", "M", "U", "N", "I", "T", "Y"];
 var myFont;
 var myEnding;
 var bottom = 50;
@@ -91,15 +91,15 @@ if (displayAll) {
 
     // have some fall from the sky
     for (let i = 0; i < 20; i++) {
-      let p = new Particle(random(displayWidth),0, 0, random(1, 5),255);
-      rain.push(p);
+   //   let p = new Particle(random(displayWidth),0, 0, random(1, 5),255);
+   //   rain.push(p);
     }
     for (let i = rain.length - 1; i >= 0; i--) {
-      rain[i].update();
-      rain[i].show();
+   //   rain[i].update();
+   //   rain[i].show();
       if (rain[i].finished()) {
         // remove this particle
-        rain.splice(i, 1);
+     //   rain.splice(i, 1);
       }
     }
 
@@ -231,8 +231,17 @@ function createBoxes()
     //setting immovable to true makes the sprite immune to bouncing and displacements
     //as if with infinite mass
     box.setCollider('rectangle', -2, 2, 66, 118);
-    box.setSpeed(random(2, 3), random(0, 360));
+    if(displayAll)
+      {
+        box.setSpeed(0, random(0, 360));
 
+      }
+      else
+      {
+        box.setSpeed(random(2, 3), random(0, 360));
+
+      }
+    
     //scale affects the size of the collider
     box.scale = random(0.5, 1);
     //mass determines the force exchange in case of bounce
