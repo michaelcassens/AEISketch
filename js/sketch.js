@@ -76,7 +76,8 @@ function draw() {
 }*/
 
 if (displayAll) {
-    for (let i = 0; i < 20; i++) {
+
+  /*  for (let i = 0; i < 20; i++) {
       let p = new Particle(random(displayWidth), displayHeight-50, random(-15, 15), random(-15, -10),255);
       particles.push(p);
     }
@@ -87,23 +88,32 @@ if (displayAll) {
         // remove this particle
         particles.splice(i, 1);
       }
-    }
+    }*/
 
     // have some fall from the sky
     for (let i = 0; i < 20; i++) {
-   //   let p = new Particle(random(displayWidth),0, 0, random(1, 5),255);
-   //   rain.push(p);
+      let p = new Particle(random(displayWidth),0, 0, random(1, 15),255);
+      rain.push(p);
     }
     for (let i = rain.length - 1; i >= 0; i--) {
-   //   rain[i].update();
-   //   rain[i].show();
+      rain[i].update();
+      rain[i].show();
       if (rain[i].finished()) {
         // remove this particle
-     //   rain.splice(i, 1);
+        rain.splice(i, 1);
       }
     }
-
+//all sprites bounce at the screen edges
+for(var i=0; i<allSprites.length; i++) {
+  var s = allSprites[i];
+    s.velocity.y = abs(s.velocity.y) + 1;
   }
+
+}
+  else
+  {
+
+  
 
   //all sprites bounce at the screen edges
   for(var i=0; i<allSprites.length; i++) {
@@ -128,6 +138,8 @@ if (displayAll) {
       s.velocity.y = -abs(s.velocity.y);
     }
   }
+
+}
   drawSprites();
 }
 
@@ -149,10 +161,10 @@ function reset() {
 }
 
 function showEnding() {
-  if (k == 6) {
-    xpos = width/4;
-    ypos += 150;
-  }
+ // if (k == 6) {
+ //   xpos = width/4;
+ //   ypos += 150;
+  //}
   if (k < line1ending.length) {
     var letterObj = new letter(line1ending[k], xpos, ypos);
     letters[k] = letterObj;
